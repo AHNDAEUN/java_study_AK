@@ -118,8 +118,19 @@ xhttp.addEventListener("readystatechange",function(){
             td= document.createElement("td")
             // 날짜 format으로 변경 
 
-            let date = new date(ar[i].regDate);// 현재 날짜
-            console.log(date);
+            // let date = new date(ar[i].regDate);// 현재 날짜
+            // console.log(date);
+            // let year = date.getFullYear();
+            // let month= date.getMonth()+1;
+            // let d = date.getDate()+1;
+
+            // console.log(year);
+            // console.log(month);
+            // console.log(d);
+            // tdText= document.createTextNode(year+"-"+month+"-"+d)
+
+
+
             tdText= document.createTextNode(ar[i].regDate)
             td.appendChild(tdText)
             tr.appendChild(td);
@@ -249,7 +260,7 @@ commentList.addEventListener("click", function(){
         let num = Event.target.getAttribute("data-comment-num") 
        
        console.log=(contents);
-        document.querySelector("#updateContents").innerHTML=contents;
+        document.querySelector("#updateContents").valueL=contents;
         document.querySelector("#updateWriter").value=writer;
        document.querySelector("#num").value=num;
         document.querySelector("#up").click();

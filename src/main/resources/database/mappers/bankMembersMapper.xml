@@ -51,9 +51,29 @@
 	</resultMap>
 
 <!-- id는 DAO의 메서드명과 동일하게 -->
-	<select id="getLogin" parameterType="BankMembersDTO" resultType="BankMembersDTO">
+	<select id="getLogin" parameterType="BankMembersDTO" resultMap="BankMembersDTO">
 		SELECT USERNAME, NAME FROM BANKMEMBERS WHERE USERNAME=#{userName} and PASSWORD=#{password}
+		SELECT B.NAME, M.USERNAME, M.ROLENUM, R.ROLENAME
+      FROM BANKMEMBERS B
+      INNER JOIN
+      MEMBER_ROLE M
+      on M.USERNAME=B.USERNAME
+      INNER JOIN
+      ROLE R
+      ON M.ROLENUM = R.ROLENUM
+      WHERE M.USERNAME= #{userName} AND M.PASSWORD=#{password};
+      
 	</select>
+	
+	<resultMap type="BankMembersDTO" id="getLoginResult">
+	<id column="USERNAME" property="userName"/>
+	<result column="NAME" property="name"/>
+	
+	<collection property="roleDTOs" javaType="List" ofType="RoleDTO">
+	<id column="ROLENAME" property="roleName"/>
+	<result column="ROLENAME" property="roleName"/>
+	</collection>
+	</resultMap>
 	
 	<select id="getSearchByID" parameterType="String" resultType="BankMembersDTO">
 		SELECT * FROM BANKMEMBERS WHERE USERNAME LIKE '%'||#{search}||'%' ORDER BY USERNAME ASC	

@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+ 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
@@ -20,6 +20,68 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
+	<!--  
+	  interceptor 설정
+	interceptor 객체 생성
+	<beans:bean class="com.iu.home.interceptor.TestInterceptor" id="testInterceptor"></beans:bean>
+	
+	url , interceptor 맵핑  어떤 url이 왔을때 interceptor 중 누구를 쓸껀지
+	<interceptors>
+	
+	<interceptor>
+	url 경로 
+	<mapping path="/**"/>
+	<beans:ref bean="testInterceptor"/>
+	객체 만들고 참조시키는 방법 1
+	</interceptor>
+	
+	<interceptor>
+	<mapping path="/qna/*"/>
+	<mapping path="member/myPage.iu/"/>
+	<exclude-mapping path="/qna/list.iu"/>
+	
+	안에 한번에 만드는 방법 2
+	<beans:bean class="com.iu.home.interceptor.MemberInterceptor" id="MemberInterceptor"></beans:bean>
+		
+	</interceptor>
+	
+	
+	 qna,notice에 업데이트할 때 작성자만 수정 가능
+	<interceptor>
+	<mapping path="/qna/update.iu"/>
+	<mapping path="notice/update.iu"/>
+		<beans:bean class="com.iu.home.interceptor.WriterCheckInterceptor" id="WriterCheckInterceptor"></beans:bean>
+		
+	</interceptor>
+	
+	</interceptors> -->
+	
+	
+	<!-- interceptor 객체 생성 -->
+	<beans:bean class= "com.iu.home.interceptor.AdminCheckInterceptor" id="AdminCheckInterceptor"></beans:bean>
+	<beans:bean class="com.iu.home.interceptor.MemberInterceptor" id="MemberInterceptor"></beans:bean>
+	<!--url -interceptor 맵핑  -->
+	<interceptors>
+	
+	<interceptor>
+	<mapping path="/notice/**"/>
+	<mapping path="/qna/**"/>
+	<exclude-mapping path="/qna/list.iu"/>
+	<exclude-mapping path="/notice/list.iu"/>
+	<exclude-mapping path="/notice/detail.iu"/>
+	<beans:ref bean="MemberInterceptor"/>
+	
+	</interceptor>
+	
+	<interceptor>
+	<mapping path="/notice/**"/>
+	<exclude-mapping path="/notice/list.iu"/>
+	<exclude-mapping path="/notice/detail.iu"/>
+	<beans:ref bean="adminCheckIterceptor"/>
+	<!-- interceptor 등록 -->
+	</interceptor>
+	</interceptors> 
 	
 	<context:component-scan base-package="com.iu.home" />
 	

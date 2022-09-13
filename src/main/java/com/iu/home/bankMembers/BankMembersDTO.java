@@ -10,13 +10,20 @@ public class BankMembersDTO {
 	private String name;
 	private String email;
 	private String phone;
-	private List<BankAccountDTO> bankAccountDTOs;
+	
+	private List<BankAccountDTO> bankAccountDTOs; // 회원한명이 계정을 여러명 가지고 있음 
 	private BankMembersFileDTO bankMembersFileDTO;
+	private List<RoleDTO> roleDTOs;
 	
 	
 	
 	
-	
+	public List<RoleDTO> getRoleDTOs() {
+		return roleDTOs;
+	}
+	public void setRoleDTOs(List<RoleDTO> roleDTOs) {
+		this.roleDTOs = roleDTOs;
+	}
 	public BankMembersFileDTO getBankMembersFileDTO() {
 		return bankMembersFileDTO;
 	}
